@@ -1,13 +1,16 @@
 DROP TABLE IF EXISTS rents;
 DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS listing_price;
 DROP TABLE IF EXISTS listing;
 DROP TABLE IF EXISTS card;
 DROP TABLE IF EXISTS setting;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS account;
+DROP TYPE IF EXISTS price_unit;
 DROP TYPE IF EXISTS privilege;
 
 CREATE TYPE privilege AS ENUM ('user', 'mod', 'admin', 'owner');
+CREATE TYPE price_unit AS ENUM ('hour', 'day');
 
 -- Definitely missing some stuff from original file
 -- There should be another type defined here but I forgot what it was
@@ -60,6 +63,13 @@ CREATE TABLE listing (
 	description		bytea,
 	name			VARCHAR(256)	NOT NULL,
 	PRIMARY KEY (listing_id)
+);
+
+CREATE TABLE listing_price (
+	listing_id		uuid		REFERENCES listing ON DELETE CASCADE NOT NULL,
+	dollar_per_unit	REAL,
+	unit			price_unit	NOT NULL,
+	PRIMARY KEY (listing_id, unit)
 );
 
 CREATE TABLE posts (

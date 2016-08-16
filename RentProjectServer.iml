@@ -11,5 +11,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="io.netty:netty-all:4.1.4.Final" level="project" />
     <orderEntry type="library" name="org.postgresql:postgresql:9.4.1209.jre7" level="project" />
+    <orderEntry type="library" name="org.json:json:20160810" level="project" />
   </component>
 </module>

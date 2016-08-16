@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 class ConnectionManager {
-    private static final String DB_PATH = "../../db/config/items_config";
+    private static final String DB_PATH = "./db/config/items_config";
 
     void initialize() {
         Connection c = null;

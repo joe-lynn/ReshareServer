@@ -6,12 +6,15 @@ package dbmanager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
 class QueryPreparer {
     // TODO(pallarino): Validate the inputs.
 
+    // TODO(pallarino): Change this to taking a connection in the constructor? Consider pros/cons.
+    // TODO(pallarino): Perhaps can take a ConnectionManager instead?
     QueryPreparer() {}
 
     // TODO(pallarino): Take in a JSON Object instead and don't take in a connection but initialize the class with the connection perhaps.
@@ -37,9 +40,19 @@ class QueryPreparer {
             System.out.println("Invalid Prepared Statement");
             return false;
         }
+
     }
 
-    boolean getListing() {
-        return true;
+    ResultSet getAllListings(Connection connection) {
+        String sql = "SELECT * FROM listing";
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not fetch listings");
+            return null;
+        }
     }
 }

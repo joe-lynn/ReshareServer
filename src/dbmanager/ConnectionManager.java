@@ -21,12 +21,11 @@ class ConnectionManager {
             File config = new File(DB_PATH);
             BufferedReader reader = new BufferedReader(new FileReader(config));
             DatabaseCredentials credentials = new DatabaseCredentials();
-            String line;
             // TODO(stfinancial): Better way to parse this in the future, use XML perhaps and wrapper class.
             credentials.dbName = reader.readLine();
             credentials.username = reader.readLine();
             credentials.password = reader.readLine();
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.postgresql.Driver"); // TODO(pallarino): Stackoverflow says this might not be needed anymore... test it out.
             c = DriverManager.getConnection("jdbc:postgresql://" + credentials.dbName,
                     credentials.username, credentials.password);
         } catch (Exception e) {

@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+// TODO(pallarino): Rename this class.
+// TODO(pallarino): Do I need to connect to database over HTTPS?
 class ConnectionManager {
     private static final String DB_PATH = "./db/config/items_config";
 

@@ -57,7 +57,6 @@ CREATE TABLE card (
 
 CREATE TABLE listing (
 	listing_id		uuid			NOT NULL,
-	price			REAL			NOT NULL,
 	broken_price	REAL,
 	images			bytea, -- Need to move this to its own table
 	description		bytea,

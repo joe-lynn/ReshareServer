@@ -1,6 +1,10 @@
 package dbmanager;
 
+import com.zaxxer.hikari.HikariConfig;
+
 import java.io.*;
+
+// TODO(pallarino): If we stay with Hikari, this may not be needed as HikariConfig can read file directly, the config must simply be reformatted.
 
 /**
  * Contains configuration settings for a Database.
@@ -11,6 +15,8 @@ class DatabaseConfig {
     private String password;
     private String username;
 
+    private HikariConfig hikariConfig;
+
     // TODO(pallarino): Multiple exception handling is needed, one for file not found, the other for invalid config file.
 
     /**
@@ -19,16 +25,30 @@ class DatabaseConfig {
      * @throws IOException - Throws a FileNotFoundException if the config file cannot be found, and IOException if config file cannot be read properly.
      */
     DatabaseConfig(String configFile) throws IOException {
+        // TODO(pallarino): Instead of reading the file ourselves, can pass to HikariConfig and then read the properties.
         BufferedReader reader = new BufferedReader(new FileReader(new File(configFile)));
         // TODO(pallarino): A more reliable way to read config (think XML or JSON)
         dbName = reader.readLine();
         username = reader.readLine();
         password = reader.readLine();
         reader.close();
+
+        // TODO(pallarino): Pass the file directly when we are happy with using Hikari.
+        hikariConfig = new HikariConfig();
+        hikariConfig.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
+        hikariConfig.setJdbcUrl("jdbc:postgresql://" + dbName);
+        hikariConfig.setUsername(username);
+        hikariConfig.setPassword(password);
     }
 
     // TODO(pallarino): Think about these accessors and whether things should be given access to these, how to better make private.
-    String getDbName() { return dbName; }
+    HikariConfig getHikariConfig() { return hikariConfig; }
+    String getName() { return dbName; }
     String getPassword() { return password; }
     String getUsername() { return username; }
+
+    @Override
+    public String toString() {
+        return dbName + "/" + username;
+    }
 }

@@ -1,8 +1,8 @@
 package dbmanager;
 
 /**
- * Created by Timothy on 8/18/16.
+ * Created by Timothy on 8/20/16.
  */
-enum QueryType {
+public enum QueryType {
 
 }

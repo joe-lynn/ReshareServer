@@ -1,4 +1,4 @@
-package dbmanager;
+package dbmanager.temp;
 
 /**
  * Created by Timothy on 8/18/16.

@@ -1,6 +1,5 @@
-package dbmanager;
+package dbmanager.temp;
 
-import java.io.File;
 /**
  * Created by Timothy on 8/14/16.
  */

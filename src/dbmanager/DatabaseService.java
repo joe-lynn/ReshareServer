@@ -18,7 +18,8 @@ public class DatabaseService {
 
     private ListingRepository listingRepository;
 
-    DatabaseService(DatabaseConfig c) {
+    // TODO(pallarino): This should not be public, we need a wrapper for this
+    public DatabaseService(DatabaseConfig c) {
         config = c;
         dataSource = new HikariDataSource(c.getHikariConfig());
         listingRepository = new ListingRepository(dataSource);
@@ -31,7 +32,7 @@ public class DatabaseService {
             String command = (String) request.get("command");
             // TODO(pallarino): Better way to handle requests later, this is a hack for now.
             if (command.equals("getListings")) {
-
+                listingRepository.getNumListings(10);
             } else {
                 return false;
             }

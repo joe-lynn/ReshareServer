@@ -3,10 +3,15 @@ package server;
 /**
  * Created by Timothy on 8/15/16.
  */
+import dbmanager.DatabaseConfig;
+import dbmanager.DatabaseService;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
+
+import java.io.IOException;
 
 /**
  * Handles a server-side channel.
@@ -15,10 +20,21 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
-
-        HttpRequest request = (HttpRequest) msg;
-        // Discard the received data silently.
-        ((ByteBuf) msg).release(); // (3)
+        if (msg instanceof HttpObject) {
+            System.out.println("It's an http object");
+            ((ByteBuf) msg).release();
+        } else {
+            System.out.println("It's NOT an http object");
+            ((ByteBuf) msg).release();
+        }
+        DatabaseConfig config = null;
+        try {
+            config = new DatabaseConfig("./db/config/items_config");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Could not load config.");
+        }
+        DatabaseService service = new DatabaseService(config);
     }
 
     @Override

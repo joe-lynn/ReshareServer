@@ -12,6 +12,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpResponseDecoder;
 
 /**
  * Discards any incoming data.
@@ -34,6 +36,8 @@ public class DiscardServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast("HTTPEncoder", new HttpResponseDecoder());
+                            ch.pipeline().addLast("HTTPAggregator", new HttpObjectAggregator(1048576));
                             ch.pipeline().addLast(new DiscardServerHandler());
                         }
                     })

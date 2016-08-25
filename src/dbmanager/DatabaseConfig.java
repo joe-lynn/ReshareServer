@@ -9,7 +9,8 @@ import java.io.*;
 /**
  * Contains configuration settings for a Database.
  */
-class DatabaseConfig {
+// TODO(pallarino): This should not be public, will not be public when wrapper is created.
+public class DatabaseConfig {
     private String configFilePath;
     private String dbName;
     private String password;
@@ -24,7 +25,8 @@ class DatabaseConfig {
      * @param configFile - Path to the database config file.
      * @throws IOException - Throws a FileNotFoundException if the config file cannot be found, and IOException if config file cannot be read properly.
      */
-    DatabaseConfig(String configFile) throws IOException {
+    // TODO(pallarino): This should not be public!!! Get rid of this public when wrapper is written.
+    public DatabaseConfig(String configFile) throws IOException {
         // TODO(pallarino): Instead of reading the file ourselves, can pass to HikariConfig and then read the properties.
         BufferedReader reader = new BufferedReader(new FileReader(new File(configFile)));
         // TODO(pallarino): A more reliable way to read config (think XML or JSON)

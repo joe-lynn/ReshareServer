@@ -5,6 +5,10 @@ package server;
  */
 public class ServerTest {
     public static void main(String[] args) {
-        DiscardServer server = new DiscardServer(8080);
+        try {
+            new DiscardServer(8080).run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

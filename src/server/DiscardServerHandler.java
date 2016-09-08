@@ -22,7 +22,7 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
     public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
         if (msg instanceof HttpObject) {
             System.out.println("It's an http object");
-            ((ByteBuf) msg).release();
+//            ((ByteBuf) msg).release();
         } else {
             System.out.println("It's NOT an http object");
             ((ByteBuf) msg).release();

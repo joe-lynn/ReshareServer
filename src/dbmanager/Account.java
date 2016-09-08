@@ -6,8 +6,6 @@ package dbmanager;
 
 import org.json.JSONObject;
 
-import java.util.UUID;
-
 public class Account<UUID> extends Entity<UUID> {
     private UUID key;
 

@@ -1,6 +1,6 @@
 package dbmanager;
 
-import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

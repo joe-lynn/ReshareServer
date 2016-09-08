@@ -1,7 +1,7 @@
 package dbmanager;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.json.JSONObject;
+import com.zaxxer.hikari.*;
+import org.json.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;

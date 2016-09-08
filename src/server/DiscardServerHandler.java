@@ -9,7 +9,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.HttpObject;
-import io.netty.handler.codec.http.HttpRequest;
 
 import java.io.IOException;
 
@@ -35,6 +34,9 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
             System.out.println("Could not load config.");
         }
         DatabaseService service = new DatabaseService(config);
+        ctx.writeAndFlush("Test stf");
+        ctx.writeAndFlush(msg);
+        ctx.close();
     }
 
     @Override

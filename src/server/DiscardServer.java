@@ -39,6 +39,7 @@ public class DiscardServer {
                             ch.pipeline().addLast("HTTPEncoder", new HttpResponseDecoder());
                             ch.pipeline().addLast("HTTPAggregator", new HttpObjectAggregator(1048576));
                             ch.pipeline().addLast(new DiscardServerHandler());
+                            ch.pipeline().writeAndFlush("Test");
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)

@@ -34,15 +34,25 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
             System.out.println("Could not load config.");
         }
         DatabaseService service = new DatabaseService(config);
-        ctx.writeAndFlush("Test stf");
+        System.out.println("Getting here 1");
+        System.out.println("Getting here 2");
         ctx.writeAndFlush(msg);
-        ctx.close();
+        System.out.println("Getting here 3");
+
+        //ctx.close();
+        System.out.println("Getting here 4");
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) {
+        ctx.flush();
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) { // (4)
         // Close the connection when an exception is raised.
         cause.printStackTrace();
+        System.out.println("Here?");
         ctx.close();
     }
 }

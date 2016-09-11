@@ -31,11 +31,8 @@ public class DatabaseConfig {
         BufferedReader reader = new BufferedReader(new FileReader(new File(configFile)));
         // TODO(pallarino): A more reliable way to read config (think XML or JSON)
         dbName = reader.readLine();
-        System.out.println(dbName);
         username = reader.readLine();
-        System.out.println(username);
         password = reader.readLine();
-        System.out.println(password);
         reader.close();
 
         // TODO(pallarino): Pass the file directly when we are happy with using Hikari.

@@ -1,5 +1,10 @@
-.DS_Store
-out
-.idea/workspace.xml
-.idea/misc.xml
-db/config/*config
+# Ignore these annoying OSX files
+**/.DS_Store
+
+# Ignore instance specific configuration files
+instance/*
+venv/*
+
+
+# Do not ignore __init__.py files
+!**/__init__.py

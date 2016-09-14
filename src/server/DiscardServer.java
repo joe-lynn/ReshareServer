@@ -39,6 +39,7 @@ public class DiscardServer {
                             ch.pipeline().addLast("HTTPEncoder", new HttpResponseDecoder());
                             ch.pipeline().addLast("HTTPAggregator", new HttpObjectAggregator(1048576));
                             ch.pipeline().addLast(new DiscardServerHandler());
+                            ch.pipeline().writeAndFlush("Test");
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
@@ -46,6 +47,8 @@ public class DiscardServer {
 
             // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind(port).sync(); // (7)
+
+
 
             // Wait until the server socket is closed.
             // In this example, this does not happen, but you can do that to gracefully

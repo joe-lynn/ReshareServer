@@ -9,7 +9,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.HttpObject;
-import io.netty.handler.codec.http.HttpRequest;
 
 import java.io.IOException;
 
@@ -35,12 +34,25 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
             System.out.println("Could not load config.");
         }
         DatabaseService service = new DatabaseService(config);
+        System.out.println("Getting here 1");
+        System.out.println("Getting here 2");
+        ctx.writeAndFlush(msg);
+        System.out.println("Getting here 3");
+
+        //ctx.close();
+        System.out.println("Getting here 4");
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) {
+        ctx.flush();
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) { // (4)
         // Close the connection when an exception is raised.
         cause.printStackTrace();
+        System.out.println("Here?");
         ctx.close();
     }
 }

@@ -37,7 +37,7 @@ public class DatabaseConfig {
 
         // TODO(pallarino): Pass the file directly when we are happy with using Hikari.
         hikariConfig = new HikariConfig();
-        hikariConfig.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
+        //hikariConfig.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
         hikariConfig.setJdbcUrl("jdbc:postgresql://" + dbName);
         hikariConfig.setUsername(username);
         hikariConfig.setPassword(password);

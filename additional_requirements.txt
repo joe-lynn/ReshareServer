@@ -1,0 +1,6 @@
+pip
+virtualenv
+requests
+psycopg2 (requires sudo apt-get install libpq-dev python-dev)
+sudo apt-get install postgresql postgresql-contrib (see: http://tecadmin.net/install-postgresql-server-on-ubuntu/)
+

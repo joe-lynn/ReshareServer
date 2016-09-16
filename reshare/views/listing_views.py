@@ -1,4 +1,4 @@
-from application import api, app
+from application import api, app, db
 
 from models.listings import ListingSchema, Listing
 
@@ -24,9 +24,14 @@ class Listing(Resource):
 		# Deserialize the incoming post (would this be in the URL or the request itself?)
 		request.args # This gives me a dictionary of the parsed query string?
 		# Create the Listing object
+		
+		
 		# Add it to the database
+		db.session.add(listing)
+
 		# Commit to the database
-	
+		db.session.commit()
+
 	# TODO(pallarino): Method to delete a listing from the database
 
 api.add_resource(Listings, '/listings')

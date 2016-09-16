@@ -1,6 +1,8 @@
 from application import app, db
 from marshmallow import Schema, fields
 
+
+# TODO(pallarino): I want to move away from using UUID, and switch to SERIAL type.
 # TODO(pallarino): Need to see whether to set as_string
 class ListingSchema(Schema):
 	# Add validations here, see: https://marshmallow.readthedocs.io/en/latest/quickstart.html#serializing-objects-dumping

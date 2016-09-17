@@ -44,7 +44,12 @@ class PostListing(Resource):
 		return 200
 	def get(self):
 		return 
-			
+
+class TestMethod(Resource):
+	def get(self):
+		return "Hello World"
+		
+api.add_resource(TestMethod, '/')	
 api.add_resource(PostListing, '/postListing')
 
 

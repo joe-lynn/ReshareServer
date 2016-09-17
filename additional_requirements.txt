@@ -1,3 +1,11 @@
+sudo apt-get install apache2
+sudo apt-get install libapache2-mod-wsgi
+
+-sT link between server and /var/ww/html/server
+mod_wsgi at /etc/apache2/sites-enabled/000-default.conf
+
+More Server Help: http://www.datasciencebytes.com/bytes/2015/02/24/running-a-flask-app-on-aws-ec2/
+
 pip
 virtualenv
 requests

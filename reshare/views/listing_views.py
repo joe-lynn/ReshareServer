@@ -42,8 +42,9 @@ class PostListing(Resource):
 		db.session.add(listing)
 		db.session.commit()
 		return 200
+	def get(self):
+		return 
 			
-bo
 api.add_resource(PostListing, '/postListing')
 
 

@@ -1,0 +1,7 @@
+Restart the Server:
+
+sudo apachectl restart
+
+Check the Server Error logs at:
+
+/var/log/apache2/error.log

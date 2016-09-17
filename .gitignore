@@ -4,7 +4,7 @@
 # Ignore instance specific configuration files
 instance/*
 venv/*
-
+reshare/instance/*
 
 # Do not ignore __init__.py files
 !**/__init__.py

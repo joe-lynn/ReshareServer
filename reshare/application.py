@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
 from instance.db_config import items_config
 
 app = Flask(__name__)

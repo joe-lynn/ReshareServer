@@ -34,6 +34,19 @@ class Listing(Resource):
 
 	# TODO(pallarino): Method to delete a listing from the database
 
+class PostListing(Resource):
+	def post(self):
+		reqs = request.args
+		schema = ListingSchema()
+		listing = schema.load(reqs)
+		db.session.add(listing)
+		db.session.commit()
+		return 200
+			
+bo
+api.add_resource(PostListing, '/postListing')
+
+
 api.add_resource(Listings, '/listings')
 api.add_resource(Listing, '/listing')
 

@@ -41,7 +41,7 @@ class Listing(db.Model):
 	is_closed = db.Column('is_closed', db.BOOLEAN(), default=False)
 	creation_timestamp = db.Column('creation_timestamp', db.DateTime(timezone=True), nullable=False)
 
-	def __init__(self, params):
+	def __init__(self):
 
 	def __repr__(self):
 		return '<Listing %r>' % self.listing_id

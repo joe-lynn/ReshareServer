@@ -48,11 +48,11 @@ class PostListing(Resource):
 class TestMethod(Resource):
 	def get(self):
 		return "Hello World"
-		
-api.add_resource(TestMethod, '/')	
-api.add_resource(PostListing, '/postListing')
 
 
-api.add_resource(Listings, '/listings')
-api.add_resource(Listing, '/listing')
+def bind_listing_views():
+	api.add_resource(TestMethod, '/')
+	api.add_resource(PostListing, '/postListing')
+	api.add_resource(Listings, '/listings')
+	api.add_resource(Listing, 'listing')
 

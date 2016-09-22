@@ -5,3 +5,7 @@ sudo apachectl restart
 Check the Server Error logs at:
 
 /var/log/apache2/error.log
+
+Shut down the Server:
+
+apachectl -k graceful-stop

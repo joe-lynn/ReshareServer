@@ -1,14 +1,16 @@
-from application import app, db
-from marshmallow import Schema, fields
+import datetime as dt
 
-from sqlalchemy.dialects.postgresql import UUID, TEXT, REAL, INTEGER, BOOLEAN, VARCHAR
+from application import app, db
+from marshmallow import Schema, fields, post_load
+
+from sqlalchemy.dialects.postgresql import TEXT, REAL, INTEGER, BOOLEAN, VARCHAR, BIGINT
 from sqlalchemy.types import DateTime
 
 # TODO(pallarino): I want to move away from using UUID, and switch to SERIAL type.
 # TODO(pallarino): Need to see whether to set as_string
 class ListingSchema(Schema):
 	# Add validations here, see: https://marshmallow.readthedocs.io/en/latest/quickstart.html#serializing-objects-dumping
-	listing_id = fields.UUID()
+	listing_id = fields.Integer() # TODO(pallarino): Check if this can support the BigInteger type
 	price_per_hour = fields.Float()
 	price_per_day = fields.Float()
 	price_per_week = fields.Float()
@@ -22,9 +24,13 @@ class ListingSchema(Schema):
 	description = fields.String()
 	is_closed = fields.Boolean()
 	creation_timestamp = fields.DateTime()
+	
+	@post_load
+	def make_listing(self, data):
+		return Listing(**data)
 
 class Listing(db.Model):
-	listing_id = db.Column('listing_id', UUID(), primary_key=True)
+	listing_id = db.Column('listing_id', BIGINT, primary_key=True)
 	price_per_hour = db.Column('price_per_hour', REAL())
 	price_per_day = db.Column('price_per_day', REAL())
 	price_per_week = db.Column('price_per_week', REAL(), default=-1)
@@ -43,9 +49,12 @@ class Listing(db.Model):
 	is_closed = db.Column('is_closed', BOOLEAN(), default=False)
 	creation_timestamp = db.Column('creation_timestamp', DateTime(timezone=True), nullable=False)
 	
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
+		print "Constructing instance"
+		self.title = kwargs.get('title', 'Empty Title')
+		self.creation_timestamp = dt.datetime.utcnow()
 		return
 	
 	def __repr__(self):
-		return '<Listing %r>' % self.listing_id
+		return '<Listing %r>' % self.title
 

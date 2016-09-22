@@ -1,6 +1,7 @@
 from application import api, app, db
 
 from models.listings import ListingSchema, Listing
+from instance.data.listings_data import fake_listings
 
 from flask import request
 from flask_restful import Resource
@@ -9,6 +10,7 @@ from flask_restful import Resource
 class Listings(Resource):
 	# Should I be using jsonify or something instead of these methods?
 	def get(self):
+		return fake_listings
 		listings = Listing.query.limit(10).all()
 		schema = ListingSchema(many=True)
 		result = schema.dump(listings)
@@ -37,10 +39,15 @@ class ListingView(Resource):
 
 class PostListing(Resource):
 	def post(self):
-		reqs = request.args
+		print "Posting Listing"
+		reqs = request.form
 		schema = ListingSchema()
 		listing = schema.load(reqs)
-		db.session.add(listing)
+		print listing.__class__.__name__
+		print listing.data
+		schema2 = ListingSchema()
+		return schema2.dump(listing.data).data
+		db.session.add(listing.data)
 		db.session.commit()
 		return 200
 	def get(self):

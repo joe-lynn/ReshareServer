@@ -51,7 +51,24 @@ class Listing(db.Model):
 	
 	def __init__(self, *args, **kwargs):
 		print "Constructing instance"
+		# TODO(pallarino): Need to scrub the data to make sure it works.
+		# TODO(pallarino): How do I avoid SQL injection?
+		# TODO(pallarino): Set reasonable defaults for these.
 		self.title = kwargs.get('title', 'Empty Title')
+		self.price_per_hour = kwargs.get('price_per_hour', -1)
+		self.price_per_day = kwargs.get('price_per_day', -1)
+		self.price_per_week = kwargs.get('price_per_week', -1)
+		self.maximum_time = kwargs.get('maximum_time', 1)
+		self.minimum_time = kwargs.get('minimum_time', 7)
+		
+		self.has_delivery = kwargs.get('has_delivery', False)
+		self.delivery_price = kwargs.get('delivery_price', 0)
+		
+		self.late_fee = kwargs.get('late_fee', 0)
+		self.broken_price = kwargs.get('broken_price', 0)
+		
+		self.description = kwargs.get('description', '')
+		
 		self.creation_timestamp = dt.datetime.utcnow()
 		return
 	

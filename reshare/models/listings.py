@@ -58,8 +58,8 @@ class Listing(db.Model):
 		self.price_per_hour = kwargs.get('price_per_hour', -1)
 		self.price_per_day = kwargs.get('price_per_day', -1)
 		self.price_per_week = kwargs.get('price_per_week', -1)
-		self.maximum_time = kwargs.get('maximum_time', 1)
-		self.minimum_time = kwargs.get('minimum_time', 7)
+		self.maximum_time = kwargs.get('maximum_time', 7)
+		self.minimum_time = kwargs.get('minimum_time', 1)
 		
 		self.has_delivery = kwargs.get('has_delivery', False)
 		self.delivery_price = kwargs.get('delivery_price', 0)

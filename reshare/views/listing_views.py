@@ -1,5 +1,5 @@
-from application import api, app, db
 
+from application import api, app, db
 from models.listings import ListingSchema, Listing
 from instance.data.listings_data import fake_listings
 
@@ -11,7 +11,7 @@ from flask_restful import Resource
 # Resource for getting multiple listings, could maybe wrap this into a single thing if we just check the parameters
 class ListingsView(Resource):
 	def get(self):
-		# TODO(pallarino): Handle query string
+		# TODO(pallarino): Handle query string (just look at request.args and process)
 		listings = Listing.query.limit(10).all()
 		schema = ListingSchema(many=True)
 		result = schema.dump(listings)

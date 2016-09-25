@@ -9,5 +9,8 @@ reshare/instance/*
 # Ignore .pyc files
 *.pyc
 
+# Ignore temp .swp files
+*.swp
+
 # Do not ignore __init__.py files
 !**/__init__.py

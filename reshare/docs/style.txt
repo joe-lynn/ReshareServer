@@ -1,0 +1,12 @@
+### NOTE: This document should be updated with coding styles and architectural patterns as they are
+### created or discovered
+
+### Comments ###
+Comments in python should have a single space after the # symbol. Currently the rule is to avoid block comments.
+
+### Imports ###
+Import order:
+	- Imports from python standard libraries are placed first
+	- Imports from third party libraries are placed second
+	- Imports from within the application are placed last
+Within each of these groupings, they should be ordered alphabetically by package name, with each module sorted alphabetically.

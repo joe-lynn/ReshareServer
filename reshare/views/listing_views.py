@@ -1,58 +1,50 @@
-from application import api, app, db
 
+from application import api, app, db
 from models.listings import ListingSchema, Listing
+from instance.data.listings_data import fake_listings
 
 from flask import request
 from flask_restful import Resource
 
-# Add decorators to limit which http methods can be used.
-class Listings(Resource):
-	# Should I be using jsonify or something instead of these methods?
+# TODO(pallarino): Naming needs some serious work.
+
+# Resource for getting multiple listings, could maybe wrap this into a single thing if we just check the parameters
+class ListingsView(Resource):
 	def get(self):
+		# TODO(pallarino): Handle query string (just look at request.args and process)
 		listings = Listing.query.limit(10).all()
 		schema = ListingSchema(many=True)
 		result = schema.dump(listings)
-		return result.data, 200 # Need to check for actual statuses afaik
+		return result.data, 200 # TODO(pallarino): Need to check for actual statuses
 
-# Add decorators to limit which http methods can be used.
-class Listing(Resource):
-	def get(self):
-		# Get the id of the listing and query the db
-		# Serialize the result and return with a status
-
+# Currently this view's sole purpose is for creating listings, subject to change.
+class CreateListing(Resource):
+	# TODO(pallarino): Do we use PUT instead to avoid double posts?
 	def post(self):
-		# Deserialize the incoming post (would this be in the URL or the request itself?)
-		request.args # This gives me a dictionary of the parsed query string?
-		# Create the Listing object
-		
-		
-		# Add it to the database
-		db.session.add(listing)
-
-		# Commit to the database
-		db.session.commit()
-
-	# TODO(pallarino): Method to delete a listing from the database
-
-class PostListing(Resource):
-	def post(self):
-		reqs = request.args
+		reqs = request.form
 		schema = ListingSchema()
 		listing = schema.load(reqs)
-		db.session.add(listing)
+		db.session.add(listing.data)
+		db.session.commit()
+		return 200 # TODO(pallarino): Need to check for actual statuses
+
+# Use to search for listings by ID
+class ListingView(Resource):
+	def get(self, listing_id):
+		listing = Listing.query.get(listing_id)
+		schema = ListingSchema()
+		result = schema.dump(listing)
+		return result.data, 200
+	
+	def delete(self, listing_id):
+		listing = Listing.query.get(listing_id)
+		db.session.delete(listing)
 		db.session.commit()
 		return 200
-	def get(self):
-		return 
-
-class TestMethod(Resource):
-	def get(self):
-		return "Hello World"
 
 
 def bind_listing_views():
-	api.add_resource(TestMethod, '/')
-	api.add_resource(PostListing, '/postListing')
-	api.add_resource(Listings, '/listings')
-	api.add_resource(Listing, 'listing')
+	api.add_resource(ListingsView, '/listings')
+	api.add_resource(CreateListing, '/listing')
+	api.add_resource(ListingView, '/listing/<int:listing_id>')
 

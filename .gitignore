@@ -6,5 +6,8 @@ instance/*
 venv/*
 reshare/instance/*
 
+# Ignore .pyc files
+*.pyc
+
 # Do not ignore __init__.py files
 !**/__init__.py

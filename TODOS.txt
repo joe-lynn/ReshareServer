@@ -1,0 +1,2 @@
+- Make serial primary key fields unique if necessary. May be by default
+- Make sure we can't mutate primary key fields and make sure that schema loads properly and update works even if there is a provided field that doesn't exist.

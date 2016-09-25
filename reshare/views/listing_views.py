@@ -1,6 +1,6 @@
 
 from application import api, app, db
-from models.listings import ListingSchema, Listing
+from models.listing import ListingSchema, Listing
 from instance.data.listings_data import fake_listings
 
 from flask import request

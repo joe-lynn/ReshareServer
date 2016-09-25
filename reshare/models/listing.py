@@ -49,6 +49,8 @@ class Listing(db.Model):
 	is_closed = db.Column('is_closed', BOOLEAN(), default=False)
 	creation_timestamp = db.Column('creation_timestamp', DateTime(timezone=True), nullable=False)
 	
+	addons = db.relationship('ListingAddon', backref='listing', lazy='dynamic', cascade='save-update, merge, delete')
+	
 	def __init__(self, *args, **kwargs):
 		print "Constructing instance"
 		# TODO(pallarino): Need to scrub the data to make sure it works.

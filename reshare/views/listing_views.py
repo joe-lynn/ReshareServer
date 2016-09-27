@@ -15,13 +15,10 @@ class ListingsView(Resource):
 		schema = ListingSchema(many=True)
 		result = schema.dump(listings)
 		return result.data, 200 # TODO(stfinancial): Need to check for actual statuses
-
-# Currently this view's sole purpose is for creating listings, subject to change.
-class CreateListing(Resource):
+	
 	# TODO(stfinancial): Do we use PUT instead to avoid double posts?
 	def post(self):
 		reqs = request.form
-		# TODO(stfinancial): Test this for bad input
 		schema = ListingSchema()
 		listing = schema.load(reqs)
 		db.session.add(listing.data)
@@ -42,9 +39,7 @@ class ListingView(Resource):
 		db.session.commit()
 		return 200
 
-
 def bind_listing_views():
 	api.add_resource(ListingsView, '/listings')
-	api.add_resource(CreateListing, '/listing')
 	api.add_resource(ListingView, '/listing/<int:listing_id>')
 

@@ -20,7 +20,7 @@ class ListingAddonSchema(Schema):
 # or should they be set at the database level, or both?
 class ListingAddon(db.Model):
 	addon_id = db.Column('addon_id', BIGINT, primary_key=True)
-	listing_id = db.Column('listing_id', BIGINT, nullable=False, db.ForeignKey('listing.listing_id'))
+	listing_id = db.Column('listing_id', BIGINT, db.ForeignKey('listing.listing_id'), nullable=False)
 	description = db.Column('description', TEXT(), nullable=False)
 	details = db.Column('details', TEXT())
 	price = db.Column('price', REAL(), default=0)

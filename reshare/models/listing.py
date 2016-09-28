@@ -1,16 +1,17 @@
 import datetime as dt
 
-from application import app, db
-from marshmallow import Schema, fields, post_load
-
-from sqlalchemy.dialects.postgresql import TEXT, REAL, INTEGER, BOOLEAN, VARCHAR, BIGINT
+from marshmallow import fields, post_load, Schema
+from sqlalchemy.dialects.postgresql import BIGINT, BOOLEAN, INTEGER, REAL, TEXT, VARCHAR
 from sqlalchemy.types import DateTime
 
-# TODO(pallarino): I want to move away from using UUID, and switch to SERIAL type.
-# TODO(pallarino): Need to see whether to set as_string
+from application import app, db
+from models.listing_category import describes
+
+# TODO(stfinancial): I want to move away from using UUID, and switch to SERIAL type.
+# TODO(stfinancial): Need to see whether to set as_string
 class ListingSchema(Schema):
 	# Add validations here, see: https://marshmallow.readthedocs.io/en/latest/quickstart.html#serializing-objects-dumping
-	listing_id = fields.Integer() # TODO(pallarino): Check if this can support the BigInteger type
+	listing_id = fields.Integer() # TODO(stfinancial): Check if this can support the BigInteger type
 	price_per_hour = fields.Float()
 	price_per_day = fields.Float()
 	price_per_week = fields.Float()
@@ -50,6 +51,7 @@ class Listing(db.Model):
 	creation_timestamp = db.Column('creation_timestamp', DateTime(timezone=True), nullable=False)
 	
 	addons = db.relationship('ListingAddon', backref='listing', lazy='dynamic', cascade='save-update, merge, delete')
+	categories = db.relationship('ListingCategory', secondary=describes, backref='listing', lazy='dynamic', cascade='save-update, merge, delete')
 	
 	def __init__(self, *args, **kwargs):
 		print "Constructing instance"

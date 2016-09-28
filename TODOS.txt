@@ -1,2 +1,6 @@
 - Make serial primary key fields unique if necessary. May be by default
 - Make sure we can't mutate primary key fields and make sure that schema loads properly and update works even if there is a provided field that doesn't exist.
+- Handle double posting on server side somehow.
+- Need to check that addon_id corresponds to listing_id, that is, we can't select an addon by id if the listing_id doesn't match
+- Consider whether we should rename each of the id fields simply to "id" for brevity and for easier disambiguation (e.g. filter(listing_id == listing_id) is hard, filter(id == listing_id) is not).
+- Does it ever make sense to use VARCHAR?

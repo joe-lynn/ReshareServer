@@ -41,5 +41,5 @@ class ListingView(Resource):
 
 def bind_listing_views():
 	api.add_resource(ListingsView, '/listings')
-	api.add_resource(ListingView, '/listing/<int:listing_id>')
+	api.add_resource(ListingView, '/listings/<int:listing_id>')
 

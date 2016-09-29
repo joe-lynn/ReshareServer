@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS describes;
+DROP TABLE IF EXISTS listing_category;
 DROP TABLE IF EXISTS listing_addon;
 DROP TABLE IF EXISTS listing;
 
@@ -40,3 +42,24 @@ CREATE TABLE listing_addon(
 	PRIMARY KEY addon_id,
 	FOREIGN KEY listing_id REFERENCES listing ON DELETE CASCADE
 );
+
+-- A listing category is the category under which a listing has been placed.
+-- Currently a listing may have more than one category but it might make sense to roll
+-- into a single category to simplify the database for now, though in the future
+-- we will probably want many properties to describe a listing.
+CREATE TABLE listing_category(
+	category_id		BIGINT	SERIAL,
+	name			VARCHAR(256) UNIQUE NOT NULL,
+
+	PRIMARY KEY category_id,
+);
+
+-- Table creating a many-to-many relationship between listings and listing categories.
+CREATE TABLE describes(
+	listing_id		BIGINT	SERIAL,
+	category_id		BIGINT	SERIAL,
+
+	PRIMARY KEY listing_id, category_id,
+	FOREIGN KEY listing_id REFERENCES listing ON DELETE CASCADE,
+	FOREIGN KEY category_id REFERENCES listing_category
+)

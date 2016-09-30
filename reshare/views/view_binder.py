@@ -4,3 +4,4 @@ from views.listing_views import bind_listing_views
 def bind_views():
 	bind_listing_views()
 	bind_listing_addon_views()
+	bind_listing_image_views()

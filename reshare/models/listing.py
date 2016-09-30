@@ -52,6 +52,7 @@ class Listing(db.Model):
 	
 	addons = db.relationship('ListingAddon', backref='listing', lazy='dynamic', cascade='save-update, merge, delete')
 	categories = db.relationship('ListingCategory', secondary=describes, backref='listing', lazy='dynamic', cascade='save-update, merge, delete')
+	images = db.relationship('ListingImage', backref='listing', lazy='dynamic', cascade='save-update, merge, delete')
 	
 	def __init__(self, *args, **kwargs):
 		print "Constructing instance"

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS listing_image;
 DROP TABLE IF EXISTS describes;
 DROP TABLE IF EXISTS listing_category;
 DROP TABLE IF EXISTS listing_addon;
@@ -62,4 +63,14 @@ CREATE TABLE describes(
 	PRIMARY KEY listing_id, category_id,
 	FOREIGN KEY listing_id REFERENCES listing ON DELETE CASCADE,
 	FOREIGN KEY category_id REFERENCES listing_category
-)
+);
+
+-- Table describing the images on a listing. The images will be stored on the web
+-- server. Priority is defined as the order in which a image is listed. The lower, the earlier.
+CREATE TABLE listing_image(
+	image_id		BIGINT	SERIAL,
+	listing_id		BIGINT	SERIAL,
+
+	url			TEXT	UNIQUE NOT NULL,
+	priority		INTEGER	DEFAULT 0,
+);

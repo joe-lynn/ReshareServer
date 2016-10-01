@@ -32,6 +32,8 @@ class ListingSchema(Schema):
 
 class Listing(db.Model):
 	listing_id = db.Column('listing_id', BIGINT, primary_key=True)
+	
+	# TODO(stfinancial): Need to handle price resolution given a bunch of inputs.
 	price_per_hour = db.Column('price_per_hour', REAL())
 	price_per_day = db.Column('price_per_day', REAL())
 	price_per_week = db.Column('price_per_week', REAL(), default=-1)

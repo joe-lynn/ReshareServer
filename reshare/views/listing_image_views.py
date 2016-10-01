@@ -24,4 +24,4 @@ class ListingImagesView(Resource):
 
 def bind_listing_image_views():
 	api.add_resource(ListingImageView, '/listings/<int:listing_id>/images/<int:image_id>')
-	api.add_resource(ListingImagesView, '/listings/<int:listing_id>/images>')
+	api.add_resource(ListingImagesView, '/listings/<int:listing_id>/images')

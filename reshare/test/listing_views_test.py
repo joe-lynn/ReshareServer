@@ -9,4 +9,8 @@ class TestListingViews(unittest.TestCase):
 	def testPostListing(self):
 		data = {'price_per_hour':5, 'maximum_time':5, 'minimum_time':1, 'delivery_price':10, 'title':'Test Title', 'description':'Titles for rent'}
 		r = requests.post(SERVER_ADDRESS + '/listings', data)
-		print r.content
+		self.assertEqual(r.status_code, 201)
+		self.assertTrue(r.json()['listing_id'] > 0)
+		self.assertTrue(r.json()['price_per_hour'] == 5)
+		r = requests.delete(SERVER_ADDRESS + '/listings/' + str(r.json()['listing_id']))
+		self.assertEqual(r.status_code, 200)

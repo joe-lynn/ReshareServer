@@ -22,8 +22,10 @@ class ListingsView(Resource):
 		schema = ListingSchema()
 		listing = schema.load(reqs)
 		db.session.add(listing.data)
+		print listing
 		db.session.commit()
-		return 200 # TODO(stfinancial): Need to check for actual statuses
+		print schema.dump(listing.data)
+		return schema.dump(listing.data).data, 201 # TODO(stfinancial): Need to check for actual statuses
 
 # Use to search for listings by ID
 class ListingView(Resource):
@@ -35,8 +37,13 @@ class ListingView(Resource):
 	
 	def delete(self, listing_id):
 		listing = Listing.query.get(listing_id)
-		db.session.delete(listing)
-		db.session.commit()
+		try:
+			db.session.delete(listing)
+			db.session.commit()
+		except Exception as e:
+			# TODO(stfinancial): Handle the various exceptions properly
+			print e
+			return 500
 		return 200
 
 def bind_listing_views():

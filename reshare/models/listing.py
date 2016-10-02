@@ -78,7 +78,4 @@ class Listing(db.Model):
 		
 		self.creation_timestamp = dt.datetime.utcnow()
 		return
-	
-	def __repr__(self):
-		return '<Listing %r>' % self.title
 

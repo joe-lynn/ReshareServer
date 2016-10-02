@@ -4,6 +4,8 @@ from sqlalchemy.dialects.postgresql import BIGINT, INTEGER, TEXT
 from application import app, db
 from models.listing import Listing, ListingSchema
 
+# TODO(stfinancial): Need to be able to handle PUT that changes priority of images.
+
 class ListingImageSchema(Schema):
 	image_id = fields.Integer()
 	listing_id = fields.Integer()

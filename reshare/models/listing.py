@@ -5,12 +5,13 @@ from sqlalchemy.dialects.postgresql import BIGINT, BOOLEAN, INTEGER, REAL, TEXT,
 from sqlalchemy.types import DateTime
 
 from application import app, db
-from models.listing_category import describes
+from models.listing_addon import ListingAddonSchema
+from models.listing_category import describes, ListingCategorySchema
+from models.listing_image import ListingImageSchema
 
 MAX_DESCRIPTION_LEN = 8192
 MAX_TITLE_LEN = 256
 
-# TODO(stfinancial): I want to move away from using UUID, and switch to SERIAL type.
 # TODO(stfinancial): Need to see whether to set as_string
 class ListingSchema(Schema):
 	# Add validations here, see: https://marshmallow.readthedocs.io/en/latest/quickstart.html#serializing-objects-dumping
@@ -21,13 +22,18 @@ class ListingSchema(Schema):
 	maximum_time = fields.Integer()
 	minimum_time = fields.Integer()
 	has_delivery = fields.Boolean()
-	delivery_price =  fields.Float()
+	delivery_price = fields.Float()
 	late_fee = fields.Float()
 	broken_price = fields.Float()
 	title = fields.String()
 	description = fields.String()
 	is_closed = fields.Boolean()
 	creation_timestamp = fields.DateTime()
+	
+	# TODO(stfinancial): Need to be able to handle these properly for both POST and PUT.
+	addons = fields.Nested(ListingAddonSchema, many=True)
+	images = fields.Nested(ListingImageSchema, many=True)
+	categories = fields.Nested(ListingCategorySchema, many=True)
 	
 	@post_load
 	def make_listing(self, data):
@@ -68,9 +74,9 @@ class Listing(db.Model):
 	
 	def __init__(self, *args, **kwargs):
 		print "Constructing instance"
-		# TODO(pallarino): Need to scrub the data to make sure it works.
-		# TODO(pallarino): How do I avoid SQL injection?
-		# TODO(pallarino): Set reasonable defaults for these.
+		# TODO(stfinancial): Need to scrub the data to make sure it works.
+		# TODO(stfinancial): How do I avoid SQL injection?
+		# TODO(stfinancial): Set reasonable defaults for these.
 		self.title = kwargs.get('title', 'Empty Title')
 		self.price_per_hour = kwargs.get('price_per_hour', -1)
 		self.price_per_day = kwargs.get('price_per_day', -1)

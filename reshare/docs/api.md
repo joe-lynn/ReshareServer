@@ -42,6 +42,8 @@ Available at:
 
 * ***broken_price:*** Price corresponding to this item being broken.
 
+The resulting listing is returned to the caller with listing_id and creation_timestamp populated, as well as fields filled with defaults.
+
 `Call: http://ec2-52-53-152-157.us-west-1.compute.amazonaws.com/listings`
 
 #### PUT ####

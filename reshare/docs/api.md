@@ -1,6 +1,6 @@
 # Public API #
 ## Listings ##
-**Query String**
+**By Query String**
 
 To receive the listings. Currently there are no criteria to filter upon, but filtering by date, distance, category, and id will be coming soon. Results in the form of:
 
@@ -12,7 +12,7 @@ Call: http://ec2-52-53-152-157.us-west-1.compute.amazonaws.com/listings
 
 Gets the listing at the specified id.
 
-Call: http://ec2-52-53-152-157.us-west-1.compute.amazonaws.com/listings/<listing_id>
+Call: http://ec2-52-53-152-157.us-west-1.compute.amazonaws.com/listings/\<listing_id\>
 
 # User API #
 ## Listings ##

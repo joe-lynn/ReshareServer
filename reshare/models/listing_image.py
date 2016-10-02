@@ -2,7 +2,6 @@ from marshmallow import fields, post_load, Schema
 from sqlalchemy.dialects.postgresql import BIGINT, INTEGER, TEXT
 
 from application import app, db
-from models.listing import Listing, ListingSchema
 
 # TODO(stfinancial): Need to be able to handle PUT that changes priority of images.
 

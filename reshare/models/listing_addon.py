@@ -3,7 +3,6 @@ from marshmallow import fields, post_load, Schema
 from sqlalchemy.dialects.postgresql import BIGINT, REAL, TEXT
 
 from application import app, db
-from models.listing import Listing, ListingSchema
 
 class ListingAddonSchema(Schema):
 	addon_id = fields.Integer() # TODO(stfinancial): How is this compatible with BigInt

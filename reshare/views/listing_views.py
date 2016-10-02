@@ -11,7 +11,11 @@ from models.listing import Listing, ListingSchema
 class ListingsView(Resource):
 	def get(self):
 		# TODO(stfinancial): Handle query string (just look at request.args and process)
-		listings = Listing.query.limit(10).all()
+		try:
+			listings = Listing.query.limit(10).all()
+		except Exception as e:
+			print e
+			return 500
 		schema = ListingSchema(many=True)
 		result = schema.dump(listings)
 		return result.data, 200 # TODO(stfinancial): Need to check for actual statuses
@@ -21,16 +25,23 @@ class ListingsView(Resource):
 		reqs = request.form
 		schema = ListingSchema()
 		listing = schema.load(reqs)
-		db.session.add(listing.data)
-		print listing
-		db.session.commit()
-		print schema.dump(listing.data)
+		try:
+			db.session.add(listing.data)
+			db.session.commit()
+		except Exception as e:
+			# TODO(stfinancial): Check for actual exceptions
+			print e
+			return 500
 		return schema.dump(listing.data).data, 201 # TODO(stfinancial): Need to check for actual statuses
 
 # Use to search for listings by ID
 class ListingView(Resource):
 	def get(self, listing_id):
-		listing = Listing.query.get(listing_id)
+		try:
+			listing = Listing.query.get(listing_id)
+		except Exception as e:
+			print e
+			return 500
 		schema = ListingSchema()
 		result = schema.dump(listing)
 		return result.data, 200

@@ -14,3 +14,7 @@ class TestListingViews(unittest.TestCase):
 		self.assertTrue(r.json()['price_per_hour'] == 5)
 		r = requests.delete(SERVER_ADDRESS + '/listings/' + str(r.json()['listing_id']))
 		self.assertEqual(r.status_code, 200)
+	
+	def testPostBadInput(self):
+		data = {'price_per_hr':5}
+		r = requests.post(SERVER_ADDRESS + '/listings', data)

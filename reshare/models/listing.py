@@ -1,11 +1,14 @@
 import datetime as dt
 
-from marshmallow import fields, post_load, Schema
+from marshmallow import fields, post_load, Schema, validates_schema, ValidationError
 from sqlalchemy.dialects.postgresql import BIGINT, BOOLEAN, INTEGER, REAL, TEXT, VARCHAR
 from sqlalchemy.types import DateTime
 
 from application import app, db
 from models.listing_category import describes
+
+MAX_DESCRIPTION_LEN = 8192
+MAX_TITLE_LEN = 256
 
 # TODO(stfinancial): I want to move away from using UUID, and switch to SERIAL type.
 # TODO(stfinancial): Need to see whether to set as_string
@@ -29,6 +32,13 @@ class ListingSchema(Schema):
 	@post_load
 	def make_listing(self, data):
 		return Listing(**data)
+	
+	@validates_schema
+	def validate_input(self, data):
+		if 'description' in data and len(data['description']) > MAX_DESCRIPTION_LEN:
+			raise ValidationError('Description is too long.')
+		if 'title' in data and len(data['title']) > MAX_TITLE_LEN:
+			raise ValidationError('Title is too long')
 
 class Listing(db.Model):
 	listing_id = db.Column('listing_id', BIGINT, primary_key=True)

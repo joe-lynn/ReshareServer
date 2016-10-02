@@ -20,7 +20,7 @@ Available at:
 #### POST ####
 **Not currently private**: POST parameters are as follows:
 
-*title\*:* Title of the listing as it will be shown in the listing directory.
+*\#title:* Title of the listing as it will be shown in the listing directory.
 
 *description:* Text describing the listing.
 

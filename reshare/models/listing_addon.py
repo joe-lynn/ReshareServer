@@ -25,6 +25,7 @@ class ListingAddon(db.Model):
 	price = db.Column('price', REAL(), default=0)
 	
 	def __init__(self, *args, **kwargs):
+		# TODO(stfinancial): What if someone wants to create an addon, will this be setting the id to 0 by default?
 		# TODO(stfinancial): Should we return false if listing_id is not provided? How can we fail?
 		self.listing_id = kwargs.get('listing_id', 0)
 		self.description = kwargs.get('description', '')

@@ -10,6 +10,7 @@ describes = db.Table('describes',
 )
 
 class ListingCategorySchema(Schema):
+	# TODO(stfinancial): Consider changing to 'id'
 	category_id = fields.Integer()
 	name = fields.String()
 	
@@ -21,7 +22,12 @@ class ListingCategory(db.Model):
 	category_id = db.Column('category_id', BIGINT, primary_key=True)
 	name = db.Column('name', VARCHAR(256), nullable=False, unique=True)
 	
+	# TODO(stfinancial): Not sure this is being done corretly, but we'll see.
+	parent_id = db.Column('parent_id', BIGINT, db.ForeignKey('listing_category.category_id'))
+	children = db.relationship('ListingCategory', backref='listing_category', lazy='dynamic')
+	
 	def __init__(self, *args, **kwargs):
+		# Figure out how to create children in the constructor.
 		self.name = kwargs.get('name', '')
 	
 	def __repr__(self):

@@ -8,6 +8,7 @@ from application import app, db
 from models.listing_addon import ListingAddonSchema
 from models.listing_category import describes, ListingCategorySchema
 from models.listing_image import ListingImageSchema
+from models.rental import RentalSchema
 
 MAX_DESCRIPTION_LEN = 8192
 MAX_TITLE_LEN = 256
@@ -35,6 +36,9 @@ class ListingSchema(Schema):
 	images = fields.Nested(ListingImageSchema, many=True)
 	categories = fields.Nested(ListingCategorySchema, many=True)
 	
+	# TODO(stfinancial): The biggest problem with this is if the listing changes, the rental will point to old version
+	rentals = fields.Nested(RentalSchema, many=True)
+	
 	@post_load
 	def make_listing(self, data):
 		return Listing(**data)
@@ -46,6 +50,7 @@ class ListingSchema(Schema):
 		if 'title' in data and len(data['title']) > MAX_TITLE_LEN:
 			raise ValidationError('Title is too long')
 
+# TODO(stfinancial): Change these deaults to None probably
 class Listing(db.Model):
 	listing_id = db.Column('listing_id', BIGINT, primary_key=True)
 	

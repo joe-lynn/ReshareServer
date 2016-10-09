@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS rental;
+DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS listing_image;
 DROP TABLE IF EXISTS describes;
 DROP TABLE IF EXISTS listing_category;
@@ -51,8 +53,10 @@ CREATE TABLE listing_addon(
 CREATE TABLE listing_category(
 	category_id		BIGINT	SERIAL,
 	name			VARCHAR(256) UNIQUE NOT NULL,
+	parent_id		BIGINT,
 
 	PRIMARY KEY category_id,
+	FOREIGN KEY parent_id REFERENCES listing_category
 );
 
 -- Table creating a many-to-many relationship between listings and listing categories.
@@ -73,4 +77,34 @@ CREATE TABLE listing_image(
 
 	url			TEXT	UNIQUE NOT NULL,
 	priority		INTEGER	DEFAULT 0,
+	
+	FOREIGN KEY listing_id REFERENCES listing,
+);
+
+CREATE TABLE user(
+	user_id		BIGINT	SERIAL,
+	username	TEXT	UNIQUE	NOT NULL,
+	password	TEXT	NOT NULL,
+
+	PRIMARY KEY user_id,
+);
+
+CREATE TABLE rental(
+	rental_id		BIGINT	SERIAL,
+	listing_id		BIGINT	SERIAL,
+	owner_id		BIGINT	SERIAL,
+	renter_id		BIGINT	SERIAL,
+	
+	start_timestamp		timestamp	NOT NULL,
+	end_timestamp		timestamp,
+	amount_paid		REAL	DEFAULT NULL,
+	
+	rating			INTEGER	DEFAULT NULL,
+	comment			TEXT	DEFAULT '',
+	comment_timestamp	timestamp	DEFAULT NULL,
+	
+	PRIMARY KEY rental_id,
+	FOREIGN KEY listing_id REFERENCES listing,
+	FOREIGN KEY owner_id REFERENCES user,
+	FOREIGN KEY renter_id REFERENCES user,
 );

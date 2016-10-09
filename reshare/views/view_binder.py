@@ -1,8 +1,11 @@
-from views.listing_addon_views import bind_listing_addon_views
-from views.listing_image_views import bind_listing_image_views
-from views.listing_views import bind_listing_views
+# TODO(stfinancial): This may just create a mess of dependencies.
+from views.listing import bind_views as bl
+from views.rental import bind_views as br
+from views.user import bind_views as bu
 
 def bind_views():
-	bind_listing_views()
-	bind_listing_addon_views()
-	bind_listing_image_views()
+	bl()
+	br()
+	bu()
+
+bind_views()

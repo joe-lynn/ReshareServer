@@ -57,7 +57,7 @@ class ListingView(Resource):
 			return 500
 		return 200
 
-def bind_listing_views():
+def bind_views():
 	api.add_resource(ListingsView, '/listings')
 	api.add_resource(ListingView, '/listings/<int:listing_id>')
 

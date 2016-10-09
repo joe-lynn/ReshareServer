@@ -64,6 +64,6 @@ class ListingAddonsView(Resource):
 		db.session.commit()
 		return 200
 
-def bind_listing_addon_views():
+def bind_views():
 	api.add_resource(ListingAddonView, '/listings/<int:listing_id>/addons/<int:addon_id>')
 	api.add_resource(ListingAddonsView, '/listings/<int:listing_id>/addons')

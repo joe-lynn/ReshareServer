@@ -3,11 +3,30 @@ from flask_restful import Resource
 
 from application import api, app, db
 from models.listing import Listing
-from models.listing_category import ListingCategory, ListingCategorySchema
+from models.listing_category import ListingCategory, ListingCategorySchema, ROOT_NAME
 
-class ListingCategoryObjectView(Resource):
-	
-
+# TODO(stfinancial): Generic method to get resource and handle various errors
+class ListingCategoryObjectController(Resource):
+	# TODO(stfinancial): What is desired functionality? Delete all children, or make children children of parent?
+	def delete(self, category_id):
+		# TODO(stfinancial): Proper error codes here.
+		try:
+			category = ListingCategory.query.get(category_id)
+		except Exception as e:
+			print e
+			return 500
+		if category.name == ROOT_NAME:
+			return "Cannot delete root node.", 500
+		try:
+			# TODO(stfinancial): Make sure this doesn't cascade (?)
+			db.session.delete(category)
+			db.session.commit()
+		except Exception as e:
+			print e
+			return 500
+		return 200
+			
+			
 
 # TODO(stfinancial): Potentially rename this.
 class ListingCategoryView(Resource):

@@ -41,6 +41,6 @@ class ListingCategoriesView(Resource):
 	def post(self):
 		return 501
 
-def bind_views():
+def bind_resources():
 	api.add_resource(ListingCategoryView, '/categories/<int:category_id>')
 	api.add_resource(ListingCategoriesView, '/categories')

@@ -35,9 +35,11 @@ class ListingCategoryObjectController(Resource):
 		try:
 			category = ListingCategory.query.get(category_id)
 			# Exclude the children from the return value.
-			# TODO(stfinancial): Parameter to ask for subtree.
-			#schema = ListingCategorySchema(exclude=('children',))
-			schema = ListingCategorySchema()
+			# TODO(stfinancial): Should we check if equal to 1?
+			if request.args.get('flat', '1') != '0':
+				schema = ListingCategorySchema(exclude=('children',))
+			else:
+				schema = ListingCategorySchema()
 			result = schema.dump(category)
 		except Exception as e:
 			print e
@@ -72,12 +74,16 @@ class ListingCategoryObjectController(Resource):
 
 class ListingCategoryCollectionController(Resource):
 	def get(self):
-		schema = ListingCategorySchema(exclude=('children',), many=True)
 		try:
 			categories = ListingCategory.query.all()
 		except Exception as e:
 			print e
 			return 500
+		# TODO(stfinancial): Unflattened doesn't work as I want, should only return root nodes and their subtree, not every node.
+		if request.args.get('flat', '1') != '0':
+			schema = ListingCategorySchema(exclude=('children',), many=True)
+		else:
+			schema = ListingCategorySchema(many=True)
 		return schema.dump(categories).data, 200
 
 	def post(self):

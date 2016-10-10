@@ -3,7 +3,6 @@ from sqlalchemy.dialects.postgresql import BIGINT, TEXT
 
 from application import app, db
 
-ROOT_CATEGORY_NAME = '#ROOT#'
 MAX_CATEGORY_LENGTH = 256
 
 # TODO(stfinancial): Fix the name of this table.
@@ -12,15 +11,12 @@ describes = db.Table('describes',
 	db.Column('category_id', BIGINT, db.ForeignKey('listing_category.category_id'))
 )
 
-# TODO(stfinancial): Should the schema have the whole tree structure? What if we want to return just the name and id? Probably want either a "pre_dump" scrub of the data, or declare them as partial fields.
-# TODO(stfinancial): CAN USE EXCLUDE when creating the object to exclude fields by name
+# TODO(stfinancial): Decide whether we want to show only 1 level of children, or all. (Exclude children in nested if not).
 class ListingCategorySchema(Schema):
 	# TODO(stfinancial): Consider changing to 'id'
 	category_id = fields.Integer()
 	name = fields.String()
 	parent_id = fields.Integer()
-	# TODO(stfinancial): How do we get the root?
-	# TODO(stfinancial): What is desired behavior here? Return all children? Probably
 	children = fields.Nested('self', many=True)
 		
 	@post_load
@@ -36,7 +32,6 @@ class ListingCategory(db.Model):
 	category_id = db.Column('category_id', BIGINT, primary_key=True)
 	name = db.Column('name', TEXT(), nullable=False, unique=True)
 	
-	# TODO(stfinancial): Not sure this is being done corretly, but we'll see.
 	parent_id = db.Column('parent_id', BIGINT, db.ForeignKey('listing_category.category_id'))
 	children = db.relationship('ListingCategory', lazy='dynamic')
 	

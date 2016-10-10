@@ -30,7 +30,7 @@ class ListingCategorySchema(Schema):
 
 class ListingCategory(db.Model):
 	category_id = db.Column('category_id', BIGINT, primary_key=True)
-	name = db.Column('name', TEXT(), nullable=False, unique=True)
+	name = db.Column('name', TEXT(), nullable=False) # Not unique for now
 	
 	parent_id = db.Column('parent_id', BIGINT, db.ForeignKey('listing_category.category_id'))
 	children = db.relationship('ListingCategory', lazy='dynamic')

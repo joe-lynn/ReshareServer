@@ -29,7 +29,7 @@ class ListingCategorySchema(Schema):
 
 	@validates_schema
 	def validate_input(self, data):
-		if 'name' in data and data['name'] > MAX_CATEGORY_LENGTH:
+		if 'name' in data and len(data['name']) > MAX_CATEGORY_LENGTH:
 			raise ValidationError('Category name is too long.')
 
 class ListingCategory(db.Model):
@@ -38,11 +38,13 @@ class ListingCategory(db.Model):
 	
 	# TODO(stfinancial): Not sure this is being done corretly, but we'll see.
 	parent_id = db.Column('parent_id', BIGINT, db.ForeignKey('listing_category.category_id'))
-	children = db.relationship('ListingCategory', backref='listing_category', lazy='dynamic')
+	children = db.relationship('ListingCategory', lazy='dynamic')
 	
 	def __init__(self, *args, **kwargs):
 		# Figure out how to create children in the constructor.
 		self.name = kwargs.get('name', '')
+		# Child of the root by default.
+		self.parent_id = kwargs.get('parent_id', None)
 	
 	def __repr__(self):
 		return '<ListingCategory %r>' % self.name

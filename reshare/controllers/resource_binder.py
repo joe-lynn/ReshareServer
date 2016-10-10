@@ -8,4 +8,3 @@ def bind_resources():
 	br()
 	bu()
 
-bind_resources()

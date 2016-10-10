@@ -4,7 +4,7 @@ from marshmallow import ValidationError
 
 from application import api, app, db
 from models.listing import Listing
-from models.listing_category import ListingCategory, ListingCategorySchema, ROOT_NAME
+from models.listing_category import ListingCategory, ListingCategorySchema, ROOT_CATEGORY_NAME
 
 # TODO(stfinancial): Need to check all these cases with tests and make sure we are returning the correct error codes as well as disallowing malicious behavior.
 
@@ -89,6 +89,7 @@ class ListingCategoryCollectionController(Resource):
 		schema = ListingCategorySchema()
 		try:
 			category = schema.load(reqs)
+			print category
 		except ValidationError as v:
 			print v
 			return 400
@@ -98,7 +99,7 @@ class ListingCategoryCollectionController(Resource):
 		except Exception as e:
 			print e
 			return 500
-		return category.data, 200
+		return schema.dump(category.data).data, 200
 
 def bind_resources():
 	api.add_resource(ListingCategoryObjectController, '/categories/<int:category_id>')

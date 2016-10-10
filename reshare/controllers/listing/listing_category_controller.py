@@ -62,7 +62,9 @@ class ListingCategoryObjectController(Resource):
 		except Exception as e:
 			print e
 			return 500
-
+		if new_category.category_id.get('category_id', category_id) != category_id:
+			return "Cannot modify Id"
+		
 		try:
 			old_category = ListingCategory.query.get(category_id).update(new_category.data)
 			db.session.commit()

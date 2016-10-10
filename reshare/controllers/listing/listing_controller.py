@@ -22,9 +22,18 @@ class ListingsView(Resource):
 	
 	# TODO(stfinancial): Do we use PUT instead to avoid double posts?
 	def post(self):
-		reqs = request.form
 		schema = ListingSchema()
-		listing = schema.load(reqs)
+		if request.is_json:
+			reqs = request.json
+			listing = schema.load(reqs)
+		elif request.form:
+			reqs = request.form
+			listing = schema.load(reqs)
+		else:
+			reqs = request.data
+			listing = schema.loads(reqs)
+		print reqs
+		print request.data
 		try:
 			db.session.add(listing.data)
 			db.session.commit()

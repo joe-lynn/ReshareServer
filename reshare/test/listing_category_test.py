@@ -23,10 +23,8 @@ class TestListingCategory(unittest.TestCase):
 	# Test posting, deleting, and getting a category.
 	def testPostCategory(self):
 		r = requests.post(CATEGORIES_ADDRESS, ROOT)
-		print "Here"
-		print r.json()
 		self.assertEqual(r.status_code, 200)
-		self.assertIsNone(r.json()[0]['parent_id'])
+		self.assertIsNone(r.json()['parent_id'])
 		root_id = r.json().get('category_id', 0)
 		self.assertTrue(root_id > 0)
 		r = requests.delete(GetById(root_id))
@@ -37,15 +35,15 @@ class TestListingCategory(unittest.TestCase):
 	# Test that children are assigned new parent_id on parent being deleted
 	def testUpdateParentOnDelete(self):
 		r = requests.post(CATEGORIES_ADDRESS, ROOT)
-		root_id = r.json()[0]['category_id']
+		root_id = r.json()['category_id']
 		child_node = CHILD_1.copy()
 		child_node['parent_id'] = root_id
 		r = requests.post(CATEGORIES_ADDRESS, child_node)
-		child_id = r.json()[0]['category_id']
+		child_id = r.json()['category_id']
 		grandchild_node = GRANDCHILD_1.copy()
 		grandchild_node['parent_id'] = child_id
 		r = requests.post(CATEGORIES_ADDRESS, grandchild_node)
-		gc_id = r.json()[0]['category_id']
+		gc_id = r.json()['category_id']
 		r = requests.delete(GetById(child_id))
 		r = requests.get(GetById(gc_id))
 		self.assertEqual(r.json()['parent_id'], root_id)

@@ -8,6 +8,7 @@ reshare/instance/*
 
 # Ignore .pyc files
 *.pyc
+.htaccess
 
 # Ignore temp .swp files
 *.swp

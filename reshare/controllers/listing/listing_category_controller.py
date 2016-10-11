@@ -53,17 +53,14 @@ class ListingCategoryObjectController(Resource):
 		schema = ListingCategorySchema()
 		try:
 			new_category = schema.load(reqs)
-			# This ensures that we cannot change the primary key value (we are modifying only the resource that the url references)
-			# TODO(stfinancial): Make sure this works
-			new_category.category_id = category_id
 		except ValidationError as v:
 			print v
 			return 400
 		except Exception as e:
 			print e
 			return 500
-		if new_category.category_id.get('category_id', category_id) != category_id:
-			return "Cannot modify Id"
+		if new_category.data.get('category_id', category_id) != category_id:
+			return "Cannot modify Id", 400
 		
 		try:
 			old_category = ListingCategory.query.get(category_id).update(new_category.data)
